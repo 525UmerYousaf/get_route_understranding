@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,11 +12,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      // Remove the debug banner
       debugShowCheckedModeBanner: false,
       title: 'DBestech',
       theme: ThemeData(primarySwatch: Colors.deepOrange),
       home: HomePage(),
+      getPages: [
+        GetPage(
+          name: '/course-page',
+          page: () => PageThree(),
+        ),
+        GetPage(
+          name: '/more-page/:data',
+          page: () => PageFour(),
+        ),
+      ],
     );
   }
 }
@@ -89,7 +100,14 @@ class HomePage extends StatelessWidget {
             RichText(
                 text: TextSpan(
                     text: 'Explore GetX',
-                    recognizer: TapGestureRecognizer()..onTap = () => null,
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => Get.to(
+                            () => PageTwo(),
+                            arguments: {
+                              'price': Random().nextInt(1000).toString(),
+                              'text': 'The course price is USD',
+                            },
+                          ),
                     style:
                         TextStyle(color: Colors.grey.shade600, fontSize: 30))),
             SizedBox(
@@ -136,7 +154,12 @@ class HomePage extends StatelessWidget {
                               borderRadius: BorderRadius.circular(20.0),
                             ),
                           ),
-                          onPressed: () => null,
+                          onPressed: () => Get.toNamed(
+                            '/course-page',
+                            arguments: {
+                              'price': Random().nextInt(1000).toString()
+                            },
+                          ),
                           child: Text(
                             "Course",
                             style: TextStyle(
@@ -163,7 +186,8 @@ class HomePage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20.0),
                           ),
                         ),
-                        onPressed: () => null,
+                        onPressed: () =>
+                            Get.toNamed('/more-page/${Random().nextInt(1000)}'),
                         child: Text(
                           "More",
                           style: TextStyle(
@@ -202,7 +226,7 @@ class PageOne extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20.0),
               ),
             ),
-            onPressed: () => null,
+            onPressed: () => Get.back(),
             child: Text(
               "Home",
               style: TextStyle(fontSize: 20, color: Colors.grey.shade900),
@@ -230,7 +254,22 @@ class PageTwo extends StatelessWidget {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [],
+          children: [
+            Text(
+              Get.arguments['text'] ?? 'Nothing to Show',
+              style: TextStyle(
+                fontSize: 30,
+                color: Colors.grey.shade600,
+              ),
+            ),
+            Text(
+              Get.arguments['price'] ?? 'Exploration Page',
+              style: TextStyle(
+                fontSize: 30,
+                color: Colors.grey.shade600,
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -253,7 +292,7 @@ class PageThree extends StatelessWidget {
       ),
       body: Center(
         child: Text(
-          "Course price is USD ",
+          "Course price is USD " + Get.arguments['price'],
           style: TextStyle(fontSize: 30, color: Colors.grey.shade600),
         ),
       ),
@@ -285,13 +324,13 @@ class PageFour extends StatelessWidget {
               ),
               onPressed: () => null,
               child: Text(
-                "Go to another page",
+                "Get to Home",
                 style: TextStyle(fontSize: 40, color: Colors.grey),
               ),
             ),
             Divider(),
             Text(
-              'Page Four',
+              'Page Four' + Get.parameters['data']!,
               style: TextStyle(fontSize: 30),
             ),
           ],
