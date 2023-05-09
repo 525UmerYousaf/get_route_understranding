@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -89,7 +91,13 @@ class HomePage extends StatelessWidget {
             RichText(
                 text: TextSpan(
                     text: 'Explore GetX',
-                    recognizer: TapGestureRecognizer()..onTap = () => null,
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => Get.to(
+                            () => PageTwo(),
+                            arguments: {
+                              'price': Random().nextInt(1000).toString()
+                            },
+                          ),
                     style:
                         TextStyle(color: Colors.grey.shade600, fontSize: 30))),
             SizedBox(
