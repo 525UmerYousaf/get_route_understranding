@@ -322,7 +322,7 @@ class PageFour extends StatelessWidget {
                 elevation: 0,
                 primary: Colors.transparent,
               ),
-              onPressed: () => null,
+              onPressed: () => Get.to(() => PageFive()),
               child: Text(
                 "Get to Home",
                 style: TextStyle(fontSize: 40, color: Colors.grey),
@@ -344,6 +344,9 @@ class PageFive extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Page Five"),
+      ),
       body: Center(
           child: Container(
         width: 200,
@@ -358,7 +361,7 @@ class PageFive extends StatelessWidget {
               borderRadius: BorderRadius.circular(20.0),
             ),
           ),
-          onPressed: () => null,
+          onPressed: () => Get.to(() => HomePage()),
           child: Text(
             "Home",
             style: TextStyle(fontSize: 20, color: Colors.grey.shade900),
