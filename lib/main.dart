@@ -202,7 +202,7 @@ class PageOne extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20.0),
               ),
             ),
-            onPressed: () => null,
+            onPressed: () => Get.back(),
             child: Text(
               "Home",
               style: TextStyle(fontSize: 20, color: Colors.grey.shade900),
